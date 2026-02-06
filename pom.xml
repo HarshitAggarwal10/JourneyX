@@ -12,7 +12,7 @@
   <modules>
     <module>common</module>
     <module>admin</module>
-    <module>user</module>
+    <module>user-service</module>
     <module>integration-app</module>
   </modules>
 
