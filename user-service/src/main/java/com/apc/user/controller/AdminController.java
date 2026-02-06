@@ -10,6 +10,6 @@ public class AdminController {
 
     @GetMapping("/dashboard")
     public String adminDashboard() {
-        return "Admin dashboard access granted";
+        return "Welcome Admin!";
     }
 }
