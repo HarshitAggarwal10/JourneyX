@@ -1,7 +1,9 @@
 package com.apc.flight.controller;
 
 import com.apc.flight.entity.Flight;
-import com.apc.flight.service.FlightService;
+import com.apc.flight.repository.FlightRepository;
+
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,21 +12,20 @@ import java.util.List;
 @RequestMapping("/api/flights")
 public class FlightController {
 
-    private final FlightService flightService;
+    private final FlightRepository flightRepository;
 
-    public FlightController(FlightService flightService) {
-        this.flightService = flightService;
+    public FlightController(FlightRepository flightRepository) {
+        this.flightRepository = flightRepository;
     }
 
-    // ADMIN only
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public Flight addFlight(@RequestBody Flight flight) {
-        return flightService.addFlight(flight);
+        return flightRepository.save(flight);
     }
 
-    // USER + ADMIN
     @GetMapping
-    public List<Flight> getFlights() {
-        return flightService.getAllFlights();
+    public List<Flight> getAllFlights() {
+        return flightRepository.findAll();
     }
 }

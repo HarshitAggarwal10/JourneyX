@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Invalid credentials");
         }
 
-        return JwtUtil.generateToken(username);
+        return JwtUtil.generateToken(user.getUsername(), user.getRole());
     }
 
     @Override

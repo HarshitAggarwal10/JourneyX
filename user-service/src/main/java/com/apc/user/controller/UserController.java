@@ -1,8 +1,5 @@
 package com.apc.user.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,20 +19,14 @@ public class UserController {
         this.userService = userService;
     }
 
+    // ✅ USER PROFILE (JWT protected)
     @GetMapping("/profile")
     public User getProfile(Authentication authentication) {
         String username = authentication.getName();
         return userService.getUserByUsername(username);
     }
 
-    @GetMapping("/profile")
-    public Map<String, Object> profile(Authentication auth) {
-        Map<String, Object> data = new HashMap<>();
-        data.put("username", auth.getName());
-        data.put("role", auth.getAuthorities());
-        return data;
-    }
-
+    // ✅ ADMIN ONLY ENDPOINT
     @GetMapping("/admin")
     @PreAuthorize("hasRole('ADMIN')")
     public String adminOnly() {
